@@ -26,7 +26,7 @@ function postStudent(req, res) {
   res.send(newStudent);
 }
 
-function putStudent(req, res) {
+function putStudentCourse(req, res) {
   if (!req.body.name) {
     return res.status(400).send("Missing student's name");
   }
@@ -34,18 +34,14 @@ function putStudent(req, res) {
   const student = students.filter(({ id }) => id === tmpid);
   if (student) {
     const idx = students.findIndex((obj) => obj.id == tmpid);
-    const newStudent = {
-      id: students[students.length - 1].id + 1,
-      name: req.body.name,
-      courses: req.body.courses,
-    };
-    students[idx] = newStudent;
+    const studentcourse = student[0].courses.push(req.params.course);
+    students[idx] = studentcourse;
     res.send(newStudent);
   } else {
     res.status(400).send(`No student with id ${id}`);
   }
 }
-function deleteStudent(req, res) {
+function deleteCourse(req, res) {
   const tmpid = req.params.id;
   const student = students.filter(({ id }) => id === +tmpid);
   if (student) {
@@ -56,10 +52,11 @@ function deleteStudent(req, res) {
     res.send(`Student with id ${tmpid} doesn't exist`);
   }
 }
+
 module.exports = {
   getStudents,
   getStudent,
   postStudent,
-  putStudent,
-  deleteStudent,
+  putStudentCourse,
+  deleteCourse,
 };
