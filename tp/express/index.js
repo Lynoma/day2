@@ -6,9 +6,13 @@ const express_handler = require('./express_handler');
 const { getPlanetByColor } = require('./express_handler');
 
 app.use(express.json());
+app.use(cors({origin: '*'}));
 app.get('/', (req, res) => {
     res.send('Welcome to my web server');
 }); 
+app.use((req, res, next) => express_handler.computeTime(req,res,next));
+app.use((req, res, next) => express_handler.getInformations(req,res,next));
+
 app.get('/messages', (req, res) => express_handler.messages(req,res));
 app.get('/planets', (req, res) => express_handler.getPlanets(req,res));
 app.get('/planets/:id', (req, res) => express_handler.getPlanetById(req,res));
