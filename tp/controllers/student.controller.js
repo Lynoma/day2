@@ -18,7 +18,7 @@ function postStudent(req, res) {
     return res.status(400).send("Missing student's name");
   }
   const newStudent = {
-    id: students[students.length - 1].id + 1,
+    id: uuidv4(),
     name: req.body.name,
     courses: req.body.courses,
   };
@@ -48,7 +48,7 @@ function deleteCourse(req, res) {
     const idx = students.findIndex((obj) => obj.id == tmpid);
     const courseToRemove = students[idx].findIndex(({ course }) => course === req.params.course);
     students[idx].courses.splice(courseToRemove, 1);
-    res.send(`Student with id ${tmpid} is deleted`);
+    res.send(`Student course is deleted`);
   } else {
     res.send(`Student with id ${tmpid} doesn't exist`);
   }
