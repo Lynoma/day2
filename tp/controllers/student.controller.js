@@ -43,10 +43,11 @@ function putStudentCourse(req, res) {
 }
 function deleteCourse(req, res) {
   const tmpid = req.params.id;
-  const student = students.filter(({ id }) => id === +tmpid);
+  const student = students.filter(({ id }) => id === tmpid);
   if (student) {
     const idx = students.findIndex((obj) => obj.id == tmpid);
-    students.splice(idx, 1);
+    const courseToRemove = students[idx].findIndex(({ course }) => course === req.params.course);
+    students[idx].courses.splice(courseToRemove, 1);
     res.send(`Student with id ${tmpid} is deleted`);
   } else {
     res.send(`Student with id ${tmpid} doesn't exist`);
